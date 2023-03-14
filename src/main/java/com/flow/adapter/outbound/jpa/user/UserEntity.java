@@ -1,5 +1,6 @@
 package com.flow.adapter.outbound.jpa.user;
 
+import com.flow.adapter.outbound.jpa.BaseEntity;
 import com.flow.adapter.outbound.jpa.user.extension.ExtensionEntity;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +21,7 @@ import lombok.ToString;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @ToString
-public class UserEntity {
+public class UserEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
