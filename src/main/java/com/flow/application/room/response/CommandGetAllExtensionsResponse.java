@@ -1,6 +1,5 @@
 package com.flow.application.room.response;
 
-import com.flow.domain.room.extension.ExtensionType;
 import java.util.List;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

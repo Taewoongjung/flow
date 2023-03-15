@@ -23,7 +23,7 @@ import lombok.ToString;
 @Table(name = "room")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-//@ToString
+@ToString
 public class RoomEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,10 +42,6 @@ public class RoomEntity extends BaseEntity {
 
         this.id = id;
         this.name = name;
-    }
-
-    public static RoomEntity toRoomEntity(Room room) {
-        return RoomEntity.of(room.getId(), room.getName());
     }
 
     public static RoomEntity toRoomEntityWithExtensions(final Room room) {

@@ -28,8 +28,9 @@ public class RoomController {
         @RequestBody final CommandAddExtensionWebRequestV1 command,
         @PathVariable final long roomId
     ) {
+        System.out.println("request = " + command);
         AddExtensionRequest commandService = new AddExtensionRequest(
-            command.getExtension(),
+            command.getExtensionName(),
             command.getType(),
             roomId
         );
@@ -43,6 +44,8 @@ public class RoomController {
         @PathVariable("roomId") final long roomId,
         @PathVariable("extensionName") final String extensionName
     ) {
+        System.out.println("?? = " + roomId);
+        System.out.println("?? = " + extensionName);
         DeleteExtensionRequest commandService = new DeleteExtensionRequest(
             roomId,
             extensionName

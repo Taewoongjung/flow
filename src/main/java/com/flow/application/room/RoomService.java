@@ -67,10 +67,8 @@ public class RoomService {
     }
 
     private List<ExtensionResponse> getResponseList(Room room) {
-        List<ExtensionResponse> responseList = room.getExtensions().stream()
+        return room.getExtensions().stream()
             .map(a -> new ExtensionResponse(a.getId(), a.getName(), a.getExtensionType(), room.getId()))
             .collect(Collectors.toList());
-
-        return responseList;
     }
 }
