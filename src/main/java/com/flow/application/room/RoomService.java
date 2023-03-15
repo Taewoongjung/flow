@@ -3,6 +3,7 @@ package com.flow.application.room;
 import static com.flow.adapter.common.exception.ErrorType.INVALID_EXTENSION_DUPLICATE;
 import static com.flow.adapter.common.exception.ErrorType.INVALID_EXTENSION_FULL;
 import static com.flow.adapter.util.Util.check;
+import static com.flow.domain.room.extension.ExtensionType.CUSTOM;
 
 import com.flow.application.room.request.AddExtensionRequest;
 import com.flow.application.room.request.DeleteExtensionRequest;
@@ -11,6 +12,7 @@ import com.flow.application.room.response.CommandDeleteExtensionResponse;
 import com.flow.application.room.response.CommandGetAllExtensionsResponse;
 import com.flow.application.room.response.ExtensionResponse;
 import com.flow.domain.room.Room;
+import com.flow.domain.room.extension.ExtensionType;
 import com.flow.domain.room.repository.RoomRepository;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -68,6 +70,7 @@ public class RoomService {
 
     private List<ExtensionResponse> getResponseList(Room room) {
         return room.getExtensions().stream()
+            .filter(a -> a.getExtensionType() == CUSTOM)
             .map(a -> new ExtensionResponse(a.getId(), a.getName(), a.getExtensionType(), room.getId()))
             .collect(Collectors.toList());
     }
