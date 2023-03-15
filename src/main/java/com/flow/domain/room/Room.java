@@ -4,6 +4,7 @@ import static com.flow.adapter.common.exception.ErrorType.INVALID_ROOM_NAME;
 import static com.flow.adapter.util.Util.require;
 
 import com.flow.domain.room.extension.Extension;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.Getter;
@@ -16,18 +17,32 @@ import lombok.ToString;
 public class Room {
     private long id;
     private String name;
+    private LocalDateTime lastModified;
+    private LocalDateTime createdAt;
 
     private List<Extension> extensions = new ArrayList<>();
 
-    public static Room of(final long id, final String name) {
+    public static Room of(
+        final long id,
+        final String name,
+        final LocalDateTime lastModified,
+        final LocalDateTime createdAt
+    ) {
         require(o -> name == null, name, INVALID_ROOM_NAME);
 
-        return new Room(id, name);
+        return new Room(id, name, lastModified, createdAt);
     }
 
-    private Room(final long id, final String name) {
+    private Room(
+        final long id,
+        final String name,
+        final LocalDateTime lastModified,
+        final LocalDateTime createdAt
+    ) {
         this.id = id;
         this.name = name;
+        this.lastModified = lastModified;
+        this.createdAt = createdAt;
     }
 
     public void addExtension(

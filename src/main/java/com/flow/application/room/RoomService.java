@@ -23,11 +23,9 @@ public class RoomService {
 
         room.addExtension(request.getExtensionName(), request.getType());
 
-        Room entity = roomRepository.save(room);
-
+        roomRepository.save(room);
         return new CommandAddExtensionResponse(
-            "success",
-            entity.getId()
+            "success"
         );
     }
 

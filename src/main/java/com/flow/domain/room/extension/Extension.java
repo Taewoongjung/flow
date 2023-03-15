@@ -3,6 +3,7 @@ package com.flow.domain.room.extension;
 import static com.flow.adapter.common.exception.ErrorType.INVALID_EXTENSION_NAME;
 import static com.flow.adapter.util.Util.require;
 
+import com.flow.domain.room.Room;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
@@ -14,6 +15,8 @@ public class Extension {
     private long id;
     private String name;
     private ExtensionType extensionType;
+
+    private Room room;
 
     public static Extension of(final long id, final String name, final String type) {
         require(o -> name == null, name, INVALID_EXTENSION_NAME);

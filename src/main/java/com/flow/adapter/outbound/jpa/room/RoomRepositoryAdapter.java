@@ -1,6 +1,6 @@
 package com.flow.adapter.outbound.jpa.room;
 
-import static com.flow.adapter.outbound.jpa.room.RoomEntity.toRoomEntity;
+import static com.flow.adapter.outbound.jpa.room.RoomEntity.toRoomEntityWithExtensions;
 
 import com.flow.domain.room.Room;
 import com.flow.domain.room.repository.RoomRepository;
@@ -18,7 +18,7 @@ public class RoomRepositoryAdapter implements RoomRepository {
 
     @Override
     public Room save(Room room) {
-        RoomEntity entity = toRoomEntity(room);
+        RoomEntity entity = toRoomEntityWithExtensions(room);
         jpaRepository.save(entity);
         return entity.toRoomReturn();
     }

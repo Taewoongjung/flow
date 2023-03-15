@@ -4,6 +4,7 @@ import com.flow.adapter.outbound.jpa.BaseEntity;
 import com.flow.adapter.outbound.jpa.room.extension.ExtensionEntity;
 import com.flow.domain.room.Room;
 import com.flow.domain.room.extension.Extension;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -22,7 +23,7 @@ import lombok.ToString;
 @Table(name = "room")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-@ToString
+//@ToString
 public class RoomEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,6 +38,8 @@ public class RoomEntity extends BaseEntity {
     }
 
     private RoomEntity(final long id, final String name) {
+        super(LocalDateTime.now(), LocalDateTime.now());
+
         this.id = id;
         this.name = name;
     }
@@ -45,8 +48,33 @@ public class RoomEntity extends BaseEntity {
         return RoomEntity.of(room.getId(), room.getName());
     }
 
+    public static RoomEntity toRoomEntityWithExtensions(final Room room) {
+        RoomEntity roomEntity = RoomEntity.of(room.getId(), room.getName());
+
+        roomEntity.setExtensionsInEntity(room.getExtensions(), roomEntity);
+
+        return roomEntity;
+    }
+
+    public void setExtensionsInEntity(
+        final List<Extension> extensionList,
+        final RoomEntity roomEntity
+    ) {
+        extensionList.forEach(domainExtension -> {
+
+            ExtensionEntity extensionEntity = ExtensionEntity.of(
+                domainExtension.getId(),
+                domainExtension.getName(),
+                String.valueOf(domainExtension.getExtensionType()),
+                roomEntity
+            );
+
+            extensions.add(extensionEntity);
+        });
+    }
+
     public Room toRoomReturn() {
-        Room room = Room.of(id, name);
+        Room room = Room.of(id, name, getLastModified(), getCreatedAt());
         extensions.forEach(extensionEntity -> room.getExtensions().add(
                 Extension.of(
                     extensionEntity.getId(),

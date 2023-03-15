@@ -1,6 +1,7 @@
 package com.flow.domain.room;
 
 import static com.flow.room.RoomFixture.ROOM;
+import static java.time.LocalDateTime.now;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -16,7 +17,9 @@ class RoomTest {
     void test1() {
         assertDoesNotThrow(() -> Room.of (
             ROOM.getId(),
-            ROOM.getName()
+            ROOM.getName(),
+            now(),
+            now()
         ));
     }
 
@@ -25,7 +28,9 @@ class RoomTest {
     void test2() {
         assertThatThrownBy(() -> Room.of (
             ROOM.getId(),
-            null
+            null,
+            now(),
+            now()
         ))
             .isInstanceOf(InvalidInputException.class)
             .hasMessage("올바르지 않은 이름입니다.");
