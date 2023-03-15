@@ -2,11 +2,9 @@ package com.flow.domain.room;
 
 import static com.flow.adapter.common.exception.ErrorType.INVALID_ROOM_NAME;
 import static com.flow.adapter.util.Util.require;
-import static com.flow.domain.room.extension.ExtensionType.CUSTOM;
 import static com.flow.domain.room.extension.ExtensionType.checkIfCustom;
 
 import com.flow.domain.room.extension.Extension;
-import com.flow.domain.room.extension.ExtensionType;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +14,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
 @Getter
-@ToString
+@ToString(exclude = {"extensions"})
 @RequiredArgsConstructor
 public class Room {
     private long id;
@@ -67,15 +65,23 @@ public class Room {
 
     public boolean isDuplicateToAdd(final String requestExtensionName) {
         Optional<Extension> duplicateExtension = this.extensions.stream()
-            .filter(e -> checkDuplicateExtension(e.getName(), requestExtensionName))
+            .filter(e -> checkSameExtension(requestExtensionName, e.getName()))
             .findFirst();
         return duplicateExtension.isPresent();
     }
 
-    private boolean checkDuplicateExtension(
+    private boolean checkSameExtension(
         final String requestExtensionName,
         final String dbExtensionName
     ) {
         return dbExtensionName.equals(requestExtensionName);
+    }
+
+    public void extractExtensionWith(final String extensionName) {
+        Optional<Extension> extension = this.extensions.stream()
+            .filter(e -> checkSameExtension(extensionName, e.getName()))
+            .findFirst();
+
+        extensions.remove(extension.get());
     }
 }

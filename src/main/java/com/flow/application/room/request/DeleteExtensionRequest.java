@@ -7,8 +7,7 @@ import lombok.ToString;
 @Getter
 @RequiredArgsConstructor
 @ToString
-public class AddExtensionRequest {
-    private final String extensionName;
-    private final String type;
+public class DeleteExtensionRequest {
     private final long roomId;
+    private final String extensionName;
 }

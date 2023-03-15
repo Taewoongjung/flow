@@ -18,16 +18,16 @@ public class Extension {
 
     private Room room;
 
-    public static Extension of(final long id, final String name, final String type) {
-        require(o -> name == null, name, INVALID_EXTENSION_NAME);
-
-        return new Extension(id, name, type);
-    }
-
     public static Extension of(final String name, final String type) {
         require(o -> name == null, name, INVALID_EXTENSION_NAME);
 
         return new Extension(name, type);
+    }
+
+    public static Extension of(final long id, final String name, final String type) {
+        require(o -> name == null, name, INVALID_EXTENSION_NAME);
+
+        return new Extension(id, name, type);
     }
 
     private Extension(final String name, final String type) {
@@ -40,5 +40,4 @@ public class Extension {
         this.name = name;
         this.extensionType = ExtensionType.from(type);
     }
-
 }

@@ -3,11 +3,15 @@ package com.flow.adapter.inbound.api.room;
 import com.flow.adapter.inbound.api.room.webrequest.CommandAddExtensionWebRequestV1;
 import com.flow.application.room.RoomService;
 import com.flow.application.room.request.AddExtensionRequest;
+import com.flow.application.room.request.DeleteExtensionRequest;
 import com.flow.application.room.response.CommandAddExtensionResponse;
+import com.flow.application.room.response.CommandDeleteExtensionResponse;
+import com.flow.application.room.response.CommandGetAllExtensionsResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,19 +30,33 @@ public class RoomController {
     ) {
         AddExtensionRequest commandService = new AddExtensionRequest(
             command.getExtension(),
-            command.getType()
+            command.getType(),
+            roomId
         );
 
         return ResponseEntity.status(HttpStatus.OK)
-            .body(roomService.addExtension(commandService, roomId));
+            .body(roomService.addExtension(commandService));
     }
 
-
-    @DeleteMapping(value = "/room/{roomId}/extension/{extensionId}")
-    public ResponseEntity<Void> deleteExtension(
-        @PathVariable final long roomId,
-        @PathVariable final long extensionId
+    @DeleteMapping(value = "/room/{roomId}/extension/{extensionName}")
+    public ResponseEntity<CommandDeleteExtensionResponse> deleteExtension(
+        @PathVariable("roomId") final long roomId,
+        @PathVariable("extensionName") final String extensionName
     ) {
-        return null;
+        DeleteExtensionRequest commandService = new DeleteExtensionRequest(
+            roomId,
+            extensionName
+        );
+
+        return ResponseEntity.status(HttpStatus.OK)
+            .body(roomService.deleteExtension(commandService));
+    }
+
+    @GetMapping(value = "/room/{roomId}")
+    public ResponseEntity<CommandGetAllExtensionsResponse> getAllExtensions(
+        @PathVariable final long roomId
+    ) {
+        return ResponseEntity.status(HttpStatus.OK)
+            .body(roomService.getAllExtensions(roomId));
     }
 }

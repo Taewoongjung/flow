@@ -25,6 +25,7 @@ public class RoomRepositoryAdapter implements RoomRepository {
 
     @Override
     public Optional<Room> findById(long id) {
-        return jpaRepository.findById(id).map(RoomEntity::toRoomReturn);
+        Optional<RoomEntity> foundRoomEntity = jpaRepository.findById(id);
+        return Optional.ofNullable(foundRoomEntity.get().toRoomReturn());
     }
 }
