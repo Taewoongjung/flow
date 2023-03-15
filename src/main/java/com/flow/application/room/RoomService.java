@@ -1,5 +1,9 @@
 package com.flow.application.room;
 
+import static com.flow.adapter.common.exception.ErrorType.INVALID_EXTENSION_DUPLICATE;
+import static com.flow.adapter.common.exception.ErrorType.INVALID_EXTENSION_FULL;
+import static com.flow.adapter.util.Util.check;
+
 import com.flow.application.room.request.AddExtensionRequest;
 import com.flow.application.room.response.CommandAddExtensionResponse;
 import com.flow.domain.room.Room;
@@ -21,9 +25,13 @@ public class RoomService {
     ) {
         Room room = findRoomByRoomId(roomId);
 
+        check(room.isDuplicateToAdd(request.getExtensionName()), INVALID_EXTENSION_DUPLICATE);
+        check(room.isSizePossibleToAdd(), INVALID_EXTENSION_FULL);
+
         room.addExtension(request.getExtensionName(), request.getType());
 
         roomRepository.save(room);
+
         return new CommandAddExtensionResponse(
             "success"
         );

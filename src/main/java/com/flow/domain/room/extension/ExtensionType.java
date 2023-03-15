@@ -26,4 +26,8 @@ public enum ExtensionType {
             .findFirst()
             .orElseThrow(() -> new InvalidInputException(INVALID_EXTENSION_TYPE));
     }
+
+    public static boolean checkIfCustom(ExtensionType type) {
+        return type == CUSTOM;
+    }
 }
