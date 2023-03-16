@@ -70,7 +70,7 @@ public class RoomService {
 
     private List<ExtensionResponse> getResponseList(Room room) {
         return room.getExtensions().stream()
-            .filter(a -> a.getExtensionType() == CUSTOM)
+            .filter(a -> CUSTOM.equals(a.getExtensionType()))
             .map(a -> new ExtensionResponse(a.getId(), a.getName(), a.getExtensionType(), room.getId()))
             .collect(Collectors.toList());
     }
