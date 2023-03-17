@@ -1,0 +1,12 @@
+
+=== 확장자 추가
+
+operation::extensions/extension-add (확장자 등록)[snippets='http-request,http-response']
+
+=== 확장자 삭제
+
+operation::extensions/extension-delete (확장자 삭제)[snippets='http-request,http-response']
+
+=== 확장자 모두 조회
+
+operation::extensions/extension-getAll (확장자 모두 조회)[snippets='http-request,http-response']

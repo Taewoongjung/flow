@@ -41,7 +41,7 @@ public class RoomController {
     }
 
     @DeleteMapping(value = "/room/{roomId}/extension/{extensionName}")
-    public ResponseEntity<CommandDeleteExtensionResponse> deleteExtension(
+    public ResponseEntity<Object> deleteExtension(
         @PathVariable("roomId") final long roomId,
         @PathVariable("extensionName") final String extensionName
     ) {
@@ -50,8 +50,9 @@ public class RoomController {
             extensionName
         );
 
-        return ResponseEntity.status(HttpStatus.OK)
-            .body(roomService.deleteExtension(commandService));
+        roomService.deleteExtension(commandService);
+
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping(value = "/room/{roomId}")
