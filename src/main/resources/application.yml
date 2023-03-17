@@ -31,3 +31,10 @@ spring:
           merge:
             entity_copy_observer: allow
     database: mysql
+
+management:
+  endpoints:
+    web:
+      base-path: /actuator
+      exposure:
+        include: health
