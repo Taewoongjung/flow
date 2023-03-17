@@ -7,4 +7,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class CommandDeleteExtensionResponse {
     private final String message;
+    private final String deletedExtensionName;
+    private final String deletedExtensionType;
 }

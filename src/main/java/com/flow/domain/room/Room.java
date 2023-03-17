@@ -77,11 +77,16 @@ public class Room {
         return dbExtensionName.equals(requestExtensionName);
     }
 
-    public void extractExtensionWith(final String extensionName) {
+    public String extractExtensionWith(final String extensionName) {
         Optional<Extension> extension = this.extensions.stream()
             .filter(e -> checkSameExtension(extensionName, e.getName()))
             .findFirst();
 
         extensions.remove(extension.get());
+        return extractExtensionType(extension.get());
+    }
+
+    private String extractExtensionType(Extension extension) {
+        return String.valueOf(extension.getExtensionType());
     }
 }

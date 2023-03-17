@@ -12,7 +12,6 @@ import com.flow.application.room.response.CommandDeleteExtensionResponse;
 import com.flow.application.room.response.CommandGetAllExtensionsResponse;
 import com.flow.application.room.response.ExtensionResponse;
 import com.flow.domain.room.Room;
-import com.flow.domain.room.extension.ExtensionType;
 import com.flow.domain.room.repository.RoomRepository;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,6 +24,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class RoomService {
 
     private final RoomRepository roomRepository;
+
+    private String success = "success";
 
     @Transactional
     public CommandAddExtensionResponse addExtension(
@@ -39,7 +40,11 @@ public class RoomService {
 
         roomRepository.save(room);
 
-        return new CommandAddExtensionResponse("success");
+        return new CommandAddExtensionResponse(
+            success,
+            request.getExtensionName(),
+            request.getType()
+        );
     }
 
     private Room findRoomByRoomId(final long roomId) {
@@ -52,11 +57,16 @@ public class RoomService {
         final DeleteExtensionRequest request
     ) {
         Room room = findRoomByRoomId(request.getRoomId());
-        room.extractExtensionWith(request.getExtensionName());
+        String extractedExtensionType =
+            room.extractExtensionWith(request.getExtensionName());
 
         roomRepository.save(room);
 
-        return new CommandDeleteExtensionResponse("success");
+        return new CommandDeleteExtensionResponse(
+            success,
+            request.getExtensionName(),
+            extractedExtensionType
+        );
     }
 
     @Transactional
@@ -65,6 +75,7 @@ public class RoomService {
     ) {
         Room room = findRoomByRoomId(roomId);
         List<ExtensionResponse> responseList = getResponseList(room);
+
         return new CommandGetAllExtensionsResponse("success", responseList);
     }
 

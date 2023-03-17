@@ -7,4 +7,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class CommandAddExtensionResponse {
     private final String message;
+    private final String addedExtensionName;
+    private final String addedExtensionType;
 }
