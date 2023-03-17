@@ -4,6 +4,8 @@
 
 <br>
 
+배포 도매인: http://flow-twj.store/main
+
 프론트: https://github.com/Taewoongjung/flow-front/tree/main
 
 <br>
