@@ -19,7 +19,7 @@ https://taewoongjung.github.io/flow-rest-docs/
 
 <br><br>
 
-# 🛠️ 사용한 툴
+# 🛠️ 사용한 기술
 
 </div>
 
